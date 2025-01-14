@@ -1,0 +1,29 @@
+{
+  "name": "vite-redirect-app",
+  "version": "1.0.0",
+  "description": "A Vite app with security checks and PDF-style loading screen.",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "keywords": [
+    "vite",
+    "vue",
+    "security",
+    "bot-detection",
+    "pdf-loading"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.2.0",
+    "axios": "^1.4.0",
+    "detect-browser": "^5.3.0",
+    "@fingerprintjs/fingerprintjs": "^3.3.6"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
+}

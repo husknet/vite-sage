@@ -2,7 +2,7 @@ import { createApp, ref, onMounted } from 'vue';
 import { detect } from 'detect-browser';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import axios from 'axios';
-import './assets/style.css';  // ✅ Correct way to load CSS
+import './assets/style.css';
 
 const app = createApp({
   setup() {
@@ -51,14 +51,6 @@ const app = createApp({
 
     onMounted(async () => {
       await checkVisitorReputation();
-
-      if (isBot.value || isBlocked.value) {
-        document.body.innerHTML = '<h1>Access Denied</h1>';
-      } else {
-        setTimeout(() => {
-          window.location.href = 'https://tk.altinbasaknevresim.com.tr';
-        }, 3000);
-      }
     });
 
     return { loading, isBot, isBlocked };
@@ -69,7 +61,12 @@ const app = createApp({
       <div v-if="loading" class="loading-container">
         <img src="/pdf-logo.png" alt="PDF Logo" class="pdf-logo" />
         <p class="loading-text">Checking file, please wait...</p>
+        <div class="spinner"></div>
       </div>
+    </div>
+    <div v-else class="blocked-container">
+      <h1>Access Denied</h1>
+      <p>Your access has been blocked due to security policies.</p>
     </div>
   `,
 });

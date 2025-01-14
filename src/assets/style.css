@@ -1,10 +1,11 @@
+/* style.css */
 /* General Page Styling */
 body, html {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #001f3f; /* Dark Blue Background */
+  background-color: #001f3f;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -28,8 +29,46 @@ body, html {
 /* Loading Text Styling */
 .loading-text {
   font-size: 1.5rem;
-  color: #ffffff; /* White Text */
+  color: #ffffff;
   margin-top: 10px;
-  letter-spacing: 0.5px;
   text-align: center;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #e0e0e0;
+  border-top-color: #e44d26;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+  margin-top: 20px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Blocked Access Page Styling */
+.blocked-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1a1a1a;
+  color: #ff4d4d;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.blocked-container h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.blocked-container p {
+  font-size: 1rem;
 }

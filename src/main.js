@@ -2,7 +2,7 @@ import { createApp, ref, onMounted } from 'vue';
 import { detect } from 'detect-browser';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import axios from 'axios';
-import '@/assets/style.css';  // ✅ Correct way to load CSS
+import './assets/style.css';  // ✅ Correct way to load CSS
 
 const app = createApp({
   setup() {

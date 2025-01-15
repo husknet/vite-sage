@@ -15,7 +15,7 @@ body::before {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50%;
+  top: 60%; /* Moved down to create space */
   left: 50%;
   transform: translate(-50%, -50%);
   color: #ffffff;
@@ -40,24 +40,38 @@ body::after {
   z-index: 5;
 }
 
-/* Spinner Animation */
-.spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #e0e0e0;
-  border-top-color: #e44d26;
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
+/* Rectangular Loader Styling */
+.loader {
+  width: 200px;
+  height: 20px;
+  background-color: #ffffff;
   position: absolute;
-  top: 60%;
+  top: 75%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 10;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+.loader::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 100%;
+  background-color: #e44d26;
+  animation: loadingBar 2s infinite;
+}
+
+@keyframes loadingBar {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
   }
 }
 
@@ -86,7 +100,7 @@ body.blocked {
   background-color: #1a1a1a;
 }
 
-/* Remove spinner for blocked users */
-body.blocked .spinner {
+/* Remove loader for blocked users */
+body.blocked .loader {
   display: none;
 }

